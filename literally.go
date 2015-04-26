@@ -19,8 +19,12 @@ import (
 	"time"
 )
 
-// ConFigurative is the active configuration used by top-level functions
-var ConFigurative = NewFigurative()
+var (
+	// ConFigurative is the active configuration used by top-level functions
+	ConFigurative = NewFigurative()
+	// literallyPkgPath is the path of this package
+	literallyPkgPath = reflect.TypeOf(ConFigurative).PkgPath()
+)
 
 // DefaultFigurative returns the default Figurative instance
 func NewFigurative() Figurative {
@@ -182,7 +186,7 @@ func (f Figurative) pointerHelper(value reflect.Value) string {
 		reflect.Complex64, reflect.Complex128,
 		reflect.String:
 		return fmt.Sprintf("%s%sPtr(%s)",
-			f.Qualifier(reflect.TypeOf(f).PkgPath()),
+			f.Qualifier(literallyPkgPath),
 			strings.Title(kind.String()),
 			f.Literally(elem.Interface()))
 	case reflect.Struct:

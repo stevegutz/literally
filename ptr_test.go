@@ -1,9 +1,6 @@
 package literally
 
-import (
-	"reflect"
-	"testing"
-)
+import "testing"
 
 func TestPtr(t *testing.T) {
 	tests := []struct {
@@ -28,7 +25,7 @@ func TestPtr(t *testing.T) {
 		{StringPtr("some string"), `StringPtr("some string")`},
 	}
 	f := Figurative{PkgNames: make(map[string]string)}
-	f.PkgNames[reflect.TypeOf(f).PkgPath()] = ""
+	f.PkgNames[literallyPkgPath] = ""
 	for _, test := range tests {
 		actual := f.Literally(test.v)
 		if test.expected != actual {
